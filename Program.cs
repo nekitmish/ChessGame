@@ -8,6 +8,18 @@ namespace ChessGame
 {
     class Program
     {
+
+        static bool isCorrectCoords(char[] coords, char[] rightSymbols)
+        {
+            bool ret = true;
+            foreach(char coord in coords){
+                if (!(rightSymbols.Contains(coord)))
+                {
+                    ret = false;
+                }
+            }
+            return ret;
+        }
         static bool MoveCheck(int startX, int finishX, int startY, int finishY, string figure)
         {
             int absXMove = Math.Abs(finishX - startX);
@@ -60,12 +72,12 @@ namespace ChessGame
                     continue;
                 }
                 string[] coordinates = input.Split(' ');
-                string startCoord = "";
-                string finishCoord = "";
-                char startXCoord = ' ';
-                char startYCoord = ' ';
-                char finishXCoord = ' ';
-                char finishYCoord = ' ';
+                string startCoord;
+                string finishCoord;
+                char startXCoord;
+                char startYCoord;
+                char finishXCoord;
+                char finishYCoord;
                 try
                 {
                     startCoord = coordinates[0];
@@ -78,12 +90,19 @@ namespace ChessGame
                     startYCoord = Convert.ToChar(startCoord.Substring(1, 1));
                     finishXCoord = Convert.ToChar(finishCoord.Substring(0, 1));
                     finishYCoord = Convert.ToChar(finishCoord.Substring(1, 1));
+
+                    char[] coords = { startXCoord, startYCoord, finishXCoord, finishYCoord };
+                    char[] rightCoords = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', '1', '2', '3', '4', '5', '6', '7', '8'};
+                    if (!isCorrectCoords(coords, rightCoords))
+                    {
+                        throw new Exception();
+                    }
                     Console.WriteLine(startXCoord + " " + startYCoord);
                     Console.ReadKey();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Я все вижу, шалун. Давай по новой");
+                    Console.WriteLine("Я все вижу, шалунишка. Давай по новой");
                     continue;
                     throw ex;
                 }
@@ -96,7 +115,7 @@ namespace ChessGame
                 {
                     Console.WriteLine("Ход неверный");
                 }
-                //isActive = false;
+                isActive = false;
             }
             Console.ReadKey();
 
